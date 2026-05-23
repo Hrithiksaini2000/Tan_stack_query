@@ -1,7 +1,7 @@
-export const Footer=()=>{
-    return(
-        <>
-            <h1>Hello Footer</h1>
-        </>
-    )
-}
+export const Footer = () => {
+  return (
+    <footer>
+      <p>copyright @Hrithik Saini</p>
+    </footer>
+  );
+};
