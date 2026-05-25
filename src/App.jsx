@@ -32,14 +32,14 @@ const router = createBrowserRouter([
   }
 ])
 
-// New Queryclient 
+// Queryclient is a brain of a react query 
 const queryclient = new QueryClient()
 
 const App = () => {
 
   // Declaring RouterProvider for routes
   return (
-    // Query client provider 
+    // Query client provider is a main component in react query 
     <QueryClientProvider client={queryclient}>
       <RouterProvider router={router}></RouterProvider>
     </QueryClientProvider>
