@@ -7,7 +7,8 @@ import { Fetchold } from "./pages/Fetchold"
 import { Fetchrq } from "./pages/Fetchrq"
 import "../src/App.css"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-
+// import { TanStackRouterDevtools } from "@tanstack/react-router-devtools"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 //  Modern way of creating the routes 
 
@@ -42,6 +43,8 @@ const App = () => {
     // Query client provider is a main component in react query 
     <QueryClientProvider client={queryclient}>
       <RouterProvider router={router}></RouterProvider>
+      {/* Dev tools  */}
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   )
 }
