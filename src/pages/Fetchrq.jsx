@@ -9,6 +9,7 @@ export const Fetchrq = () => {
 const {data, isLoading, isError, error} = useQuery({
     queryKey:["posts"], // Usestate hook work in react query 
     queryFn: fetchPosts, // Useeffect hook work in react query 
+    staleTime: 5000,
   })
 
   if(isLoading) return <p>Loading</p>
