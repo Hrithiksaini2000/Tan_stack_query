@@ -9,6 +9,7 @@ import "../src/App.css"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 // import { TanStackRouterDevtools } from "@tanstack/react-router-devtools"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Fetchindv } from "./components/UI/Fetchindv"
 
 //  Modern way of creating the routes 
 
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/rq",
         element: <Fetchrq />
+      },
+      {
+        path: "/rq/:id",
+        element: <Fetchindv />
       }
     ]
   }

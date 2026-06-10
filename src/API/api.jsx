@@ -10,3 +10,14 @@ export const fetchPosts = async () => {
     const res = await api.get("/posts")
     return res.status == 200 ? res.data : []
 }
+
+// To Fetch The individual data 
+
+export const fetchinvpost = async (id) =>{
+    try {
+        const res = await api.get(`/posts/${id}`)
+        return res.status == 200 ? res.data : []
+    } catch (error) {
+        console.log(error)
+    }
+}

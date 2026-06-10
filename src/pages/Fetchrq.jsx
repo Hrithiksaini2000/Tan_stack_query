@@ -2,20 +2,21 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { fetchPosts } from "../API/api";
 import { useQuery } from "@tanstack/react-query";
+import { NavLink } from "react-router-dom";
 
 export const Fetchrq = () => {
 
-//   It is a main hook in react query 
-const {data, isLoading, isError, error} = useQuery({
-    queryKey:["posts"], // Usestate hook work in react query 
+  //   It is a main hook in react query 
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["posts"], // Usestate hook work in react query 
     queryFn: fetchPosts, // Useeffect hook work in react query 
     // staleTime: 5000,
     refetchInterval: 1000,
-    refetchIntervalInBackground:true,
+    refetchIntervalInBackground: true,
   })
 
-  if(isLoading) return <p>Loading</p>
-  if(isError) return <p> Error: {error.message ||  "Something Went Wrong"}</p>
+  if (isLoading) return <p>Loading</p>
+  if (isError) return <p> Error: {error.message || "Something Went Wrong"}</p>
 
   return (
     <div>
@@ -24,8 +25,11 @@ const {data, isLoading, isError, error} = useQuery({
           const { id, title, body } = curElem;
           return (
             <li key={id}>
-              <p>{title}</p>
-              <p>{body}</p>
+              <NavLink to={`/rq/${id}`}>
+                <p>{id}</p>
+                <p>{title}</p>
+                <p>{body}</p>
+              </NavLink>
             </li>
           );
         })}
