@@ -6,8 +6,8 @@ const api = axios.create({
 })
 
 // To Fetch The data
-export const fetchPosts = async () => {
-    const res = await api.get("/posts")
+export const fetchPosts = async (pagenumber) => {
+    const res = await api.get(`/posts?_start=${pagenumber}&_limit=3`)
     return res.status == 200 ? res.data : []
 }
 
