@@ -21,3 +21,9 @@ export const fetchinvpost = async (id) =>{
         console.log(error)
     }
 }
+
+// Delete The post
+
+export const deletepost = (id) =>{
+    return api.delete(`/posts/${id}`)
+}

@@ -1,10 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { fetchPosts } from "../API/api";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { deletepost, fetchPosts } from "../API/api";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { NavLink } from "react-router-dom";
 
+
+
 export const Fetchrq = () => {
+
+
 
   const [pagenumber, setpagenumber] = useState(0)
 
@@ -17,6 +21,17 @@ export const Fetchrq = () => {
     // refetchInterval: 1000,
     // refetchIntervalInBackground: true,
   })
+  const queryclient = useQueryClient()
+
+  // Mutation function to delete post 
+const deletemutation = useMutation({
+  mutationFn: (id)=> deletepost(id),
+  onSuccess: (data,id)=>{
+    queryclient.setQueryData(["posts", pagenumber], (curElem) =>{
+      return curElem?.filter((post)=> post.id !== id)
+    })
+  }
+})
 
   if (isLoading) return <p>Loading</p>
   if (isError) return <p> Error: {error.message || "Something Went Wrong"}</p>
@@ -33,6 +48,7 @@ export const Fetchrq = () => {
                 <p>{title}</p>
                 <p>{body}</p>
               </NavLink>
+              <button onClick={()=> deletemutation.mutate(id)}>Delete</button>
             </li>
           );
         })}
