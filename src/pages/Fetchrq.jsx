@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { deletepost, fetchPosts } from "../API/api";
+import { deletepost, fetchPosts, updatepost } from "../API/api";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { NavLink } from "react-router-dom";
 
@@ -33,6 +33,18 @@ const deletemutation = useMutation({
   }
 })
 
+  // Mutation function to Update post 
+const updatemutation = useMutation({
+  mutationFn: (id)=> updatepost(id),
+  onSuccess: (apidata,postid)=>{
+    queryclient.setQueryData(["posts", pagenumber], (postdata) =>{
+      return postdata?.map((curpost)=>{
+       return curpost.id===postid ? {...curpost, title:apidata.data.title} : curpost
+      })
+    })
+  }
+})
+
   if (isLoading) return <p>Loading</p>
   if (isError) return <p> Error: {error.message || "Something Went Wrong"}</p>
 
@@ -49,6 +61,7 @@ const deletemutation = useMutation({
                 <p>{body}</p>
               </NavLink>
               <button onClick={()=> deletemutation.mutate(id)}>Delete</button>
+              <button onClick={()=> updatemutation.mutate(id)}>Update</button>
             </li>
           );
         })}

@@ -27,3 +27,8 @@ export const fetchinvpost = async (id) =>{
 export const deletepost = (id) =>{
     return api.delete(`/posts/${id}`)
 }
+
+// Update Post
+export const updatepost = (id) =>{
+    return api.patch(`/posts/${id}`, {title: "I have Updated"})
+}
