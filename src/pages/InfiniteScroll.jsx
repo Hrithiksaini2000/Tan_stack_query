@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { fetchusers } from "../API/api"
 import { useEffect } from "react"
+import { useInView } from "react-intersection-observer"
 
 export const Infinitescroll = () => {
 
@@ -14,21 +15,29 @@ export const Infinitescroll = () => {
     })
     console.log(data)
 
-    const handlescroll=()=>{
-        const bottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1
+    // const handlescroll=()=>{
+    //     const bottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1
 
-        if(bottom && hasNextPage){
+    //     if(bottom && hasNextPage){
+    //         fetchNextPage()
+    //     }
+    // }
+
+    const { ref, inView } = useInView({
+        threshold: 0,
+    })
+
+
+    useEffect(() => {
+        // window.addEventListener("scroll", handlescroll)
+        // return () => window.removeEventListener("scroll", handlescroll)
+        if (inView && hasNextPage) {
             fetchNextPage()
         }
-    }
+    }, [inView, fetchNextPage, hasNextPage])
 
-    useEffect(()=>{
-        window.addEventListener("scroll", handlescroll)
-        return () => window.removeEventListener("scroll", handlescroll)
-    },[hasNextPage])
-
-    if(status === "loading") return <div>Loading</div>
-    if(status === "error") return <div>Error</div>
+    if (status === "loading") return <div>Loading</div>
+    if (status === "error") return <div>Error</div>
     return (
         <div>
             <h1>Infinite Scroll with react query</h1>
@@ -41,11 +50,13 @@ export const Infinitescroll = () => {
                                 <p>{user.login}</p>
                                 <img src={user.avatar_url} alt={user.login} width={50} height={50} />
                             </li>
-                ))}
+                        ))}
                     </ul>
                 ))
             }
-            {isFetchingNextPage && <div>Loading More...</div>}
+            <div ref={ref} >
+                {isFetchingNextPage && <div>Loading More...</div>}
+            </div>
         </div>
 
     )
